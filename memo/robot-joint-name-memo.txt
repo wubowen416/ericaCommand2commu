@@ -1,0 +1,14 @@
+ERICA基準
+
+胸	'breast open'
+肩上げ	'shoulder up'
+脇開閉	'shoulder side'
+腕上げ	'upperarm up'
+上腕回転	'upperarm turn'
+肘	'elbow'
+前腕	'forearm turn'
+手首	'wrist'
+
+親指	'thumb'
+人差し指	'index'
+中、薬、子指	'other finger'

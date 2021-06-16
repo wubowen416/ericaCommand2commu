@@ -1,0 +1,41 @@
+ges_file_inf	command 12	angle 8	wristpoint 3	phase 1
+
+robot_inf	face	start 1	length 13
+robot_inf	center	start 14	length 7
+robot_inf	left	armstart 21	armlength 12	fingerlength 3
+robot_inf	right	armstart 33	armlength 12	fingerlength 3
+
+elbow_joint	left 26	right 38
+uparm_joint	left 24	right 36
+forearm_joint	left 27	right 39
+
+beat elbow	30
+beat uparm	50
+beat forearm	0
+beatframe	30
+beatpro	0.6
+
+
+#20190418default command	64,120,0,128,0,0,0,0,0,0,0,0,0,128,128,120,128,128,120,140,0,64,50,24,100,125,210,200,180,0,0,0,0,74,85,48,128,122,180,250,250,0,0,0,0,0
+default command	64,120,0,128,0,0,0,0,0,0,0,0,0,128,128,120,128,128,120,140,0,64,32,40,100,135,210,250,250,0,0,0,0,128,100,20,50,150,180,250,250,0,0,0,0,0
+#joint number    1   2 3   4 5 6 7 8 9 10111213 14  15  16  17  18  19  20 2122 23 24  25  26  27  28  29 30313233 34  35 36 37  38  39  40  41 4243444546
+
+limit angle left	8
+0	27	1
+0	12.5	1
+-10	88	1
+0	27	1
+0	88	1
+0	110	1
+0	170	1
+0	35	1
+
+limit angle right	8
+0	27	1
+0	12.5	1
+-10	88	1
+0	27	1
+0	88	1
+0	118	1
+0	170	1
+0	37	1

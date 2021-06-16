@@ -1,0 +1,17 @@
+robotname	ERICA
+
+hold	1.0
+fps	100
+
+cluster_num	20
+
+preparation	0.8
+retraction	1.4
+pre parameter	0.9
+ret parameter	0.7
+
+gesture category	Iconic,Metaphoric,Deictic,Emblem
+Iconic	図像,映像的,名詞連想,図＿概略
+Metaphoric	名＿隠喩的,動＿隠喩的,期間,時点,否定,制止否定,考＿その他,関係,修飾,程度,擬音,様＿その他,心的表現
+Deictic	c01,c02,c03,自分,指＿その他
+Emblem	エンブレム

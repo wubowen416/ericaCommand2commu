@@ -1,0 +1,30 @@
+{
+    "Commu": {
+        "max_speed": 50,
+        "denominator": 5,
+        "fps": 10
+    },
+
+    "Command": {
+        "command": "/movemulti"
+    },
+
+    "Data": {
+        "fps": 10
+    },
+
+    "Constraint": {
+        "Left": {
+            "Yoko": {
+                "upper": 20,
+                "lower": -40
+            }
+        },
+        "Right": {
+            "Yoko": {
+                "upper": 40,
+                "lower": -20
+            }
+        }
+    }
+}
