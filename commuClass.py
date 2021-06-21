@@ -41,18 +41,18 @@ class CommUClass:
         # Adjust rotation direction for CommU
 
         def right_yoko_map(x):
-            x = np.abs(x)
-            if x < 25:
-                return x - 25
-            else:
-                return 70 - x
+            x_abs = np.abs(x)
+            if  x_abs < 25:
+                return - (25 - x_abs)
+            elif 25 < x_abs:
+                return x_abs - 25
 
         def left_yoko_map(x):
-            x = np.abs(x)
-            if x < 25:
-                return 25 - x
-            else:
-                return x - 70
+            x_abs = np.abs(x)
+            if x_abs < 25:
+                return 25 - x_abs
+            elif x_abs > 25:
+                return -(x_abs - 25)
 
         
         left_yoko_euler = np.array(list(map(left_yoko_map, left_thetas))).astype(int)
@@ -68,7 +68,7 @@ class CommUClass:
 
         # Write command
 
-        sheet = np.full(shape=(14, length), fill_value=-1, dtype=int)
+        sheet = np.full(shape=(14, length), fill_value=-10000, dtype=int)
 
         # lines = []
 
