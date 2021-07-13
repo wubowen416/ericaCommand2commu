@@ -54,20 +54,79 @@ class CommUClass:
             elif x_abs > 25:
                 return -(x_abs - 25)
 
-        
         left_yoko_euler = np.array(list(map(left_yoko_map, left_thetas))).astype(int)
         left_tate_euler = (90-np.abs(left_phis)).astype(int)
         right_yoko_euler = np.array(list(map(right_yoko_map, right_thetas))).astype(int)
         right_tate_euler = (np.abs(right_phis)-90).astype(int)
 
-        # Add constraint
+        # Constraint
+        # 1 Add constraint
         left_yoko_euler[left_yoko_euler > self.constraint.Left.Yoko.upper] = self.constraint.Left.Yoko.upper
         left_yoko_euler[left_yoko_euler < self.constraint.Left.Yoko.lower] = self.constraint.Left.Yoko.lower
         right_yoko_euler[left_yoko_euler > self.constraint.Right.Yoko.upper] = self.constraint.Right.Yoko.upper
         right_yoko_euler[left_yoko_euler < self.constraint.Right.Yoko.lower] = self.constraint.Right.Yoko.lower
 
-        # Write command
+        # 2 Collide with body
+        # 2-A left hand
+        def f(x):
+            return -0.75 * x + 37.5
+        def inv_f(y):
+            return (37.5 - y) / 0.75
 
+        for i, (x, y) in enumerate(zip(left_tate_euler, left_yoko_euler)):
+
+            if x > 10 and x < 50 and y > 0:
+                y_of_x = f(x)
+                if y >= y_of_x: # Above the line
+                    x_of_y = inv_f(y)
+                    y = (y + y_of_x) / 2
+                    x = (x + x_of_y) / 2
+
+            if x >= 50 and y > 0:
+                y = 0
+            
+            if x < -40 and y > 40:
+                x_dis = -x - 40
+                y_dis = y - 40
+                if x_dis < y_dis:
+                    x = -40
+                else:
+                    y = 40
+
+            left_tate_euler[i] = int(x)
+            left_yoko_euler[i] = int(y) 
+
+        # 2-B right hand
+        def f(x):
+            return -0.75 * x - 37.5
+        def inv_f(y):
+            return -(37.5 + y) / 0.75
+
+        for i, (x, y) in enumerate(zip(right_tate_euler, right_yoko_euler)):
+
+            if x < -50 and y < 0 :
+                y = 0
+
+            if x < -10 and y < 0 and x > -50:
+                y_of_x = f(x)
+                if y <= y_of_x: # Above the line
+                    x_of_y = inv_f(y)
+                    y = (y + y_of_x) / 2
+                    x = (x + x_of_y) / 2
+            
+            if x > 40 and y < -40:
+                x_dis = x - 40
+                y_dis = - y - 40
+                if x_dis < y_dis:
+                    x = 40
+                else:
+                    y = -40
+            
+            right_yoko_euler[i] = int(y)
+            right_tate_euler[i] = int(x)
+
+
+        # Write command
         sheet = np.full(shape=(14, length), fill_value=-10000, dtype=int)
 
         # lines = []
@@ -104,9 +163,30 @@ class CommUClass:
                 # line += f" 5 {right_yoko_euler[i]} {speed_5}"
                 sheet[5, i] = right_yoko_euler[i]
 
-            if speed_2 == 0 and speed_3 == 0 and speed_4 == 0 and speed_5 == 0:
+            # if speed_2 == 0 and speed_3 == 0 and speed_4 == 0 and speed_5 == 0:
                 # line = "skip"
-                pass
+                # pass
+
+            if speed_2 == 0:
+                if i == 0:
+                    sheet[2, i] = 80
+                else:
+                    sheet[2, i-1] = left_tate_euler[i-1]
+            if speed_3 == 0:
+                if i == 0:
+                    sheet[3, i] = -4
+                else:
+                    sheet[3, i-1] = left_yoko_euler[i-1]
+            if speed_4 == 0:
+                if i == 0:
+                    sheet[4, i] = -80
+                else:
+                    sheet[4, i-1] = right_tate_euler[i-1]
+            if speed_5 == 0:
+                if i == 0:
+                    sheet[4, i] = 4
+                else:
+                    sheet[5, i-1] = right_yoko_euler[i-1]
 
             # lines.append(line + '\n')
 
